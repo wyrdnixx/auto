@@ -1,0 +1,16 @@
+{
+  "name": "full-stack-app",
+  "version": "1.0.0",
+  "description": "Full Stack Application",
+  "scripts": {
+    "start:backend": "nodemon backend/app.js",
+    "start:frontend": "cd frontend && npm run serve",
+    "start:fullstack": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && npm install",
+    "install:fullstack": "npm install && npm run install:frontend && npm run install:backend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1"
+  }
+}

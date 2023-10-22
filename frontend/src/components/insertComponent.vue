@@ -1,0 +1,84 @@
+<template>
+    <div>
+      <h2>Tilgung eintragen</h2>
+      <!-- 
+        <form @submit.prevent="insertTilgung">
+        <div>
+          <label for="id">ID:</label>
+          <input type="number" id="id" v-model="item.id" >
+        </div>
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="name" v-model="item.name" required>
+        </div>
+        <div>
+          <button type="submit">Insert item</button>
+        </div>
+      </form>
+      -->
+
+      <form @submit.prevent="addData">
+        <div>
+          <label for="datum">Datum:</label>
+          <input type="date" lang="de" id="datum" v-model="tilgung.datum" required>
+        </div>
+        <div>
+          <label for="betrag">Betrag:</label>
+         <input type="number" step="0.01" id="betrag" v-model="tilgung.betrag" required>
+         
+        </div>
+        <button type="submit"> senden</button>       
+      </form>
+
+
+    </div>
+  </template>
+  
+  <script>
+
+  import { addTilgung} from "../js/dataservice";
+  import { EventBus } from '../main.js';
+
+  export default {
+    data() {
+      return {
+        tilgung: {
+          datum: '',
+          betrag: '227.25',
+        },
+      };
+    },
+    methods: {     
+      async addData() {
+        try {
+          await addTilgung(this.tilgung);   
+          //this.$parent.refreshData();         
+          EventBus.$emit('EVTcustom-event', this.tilgung);
+        }catch(error) {
+          console.error('Error fetching data:',error)
+        }
+      },
+       /*  async insertTilgung() {
+            try {
+                const response = await this.$axios.post('/api/addTilgung',this.tilgung ,{
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }); // Replace with your API endpoint
+                console.log(response.data);
+                window.location.reload();
+            } catch (error) {
+                console.error('Error fetching items:', error);
+        }
+        },
+ */
+    }
+}
+      
+    
+  
+  </script>
+  
+  <style scoped>
+  /* Add your CSS styles here */
+  </style>
