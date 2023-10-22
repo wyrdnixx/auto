@@ -1,1 +1,10 @@
+
+Test VueApp with nodejs backend server.
+gets and writes data to an sqlite3 databse.
+tests to build an event driven webapp
+
+
+
+# run fullstack development
+
 npm run start:fullstack
