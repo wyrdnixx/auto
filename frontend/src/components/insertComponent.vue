@@ -30,9 +30,6 @@
         <button type="submit"> senden</button>       
       </form>
 
-      <form @submit.prevent="testUpdateEvent">
-        <button type="submit"> EVT_testUpdateEvent</button>       
-      </form>
 
     </div>
   </template>
@@ -54,31 +51,12 @@
     methods: {     
       async addTilgung() {
         try {
-          //await addTilgung(this.tilgung);   
-          //this.$parent.refreshData();         
-          //EventBus.$emit('EVTcustom-event', this.tilgung);
-          eventBus.$emit('EVT_addTilgung', this.tilgung);
+
+          eventBus.$emit('evt_eb_addTilgung', this.tilgung);
         }catch(error) {
           console.error('Error fetching data:',error);
         }
       },
-      async testUpdateEvent() {
-        eventBus.$emit('EVT_testUpdateEvent')
-      },
-       /*  async insertTilgung() {
-            try {
-                const response = await this.$axios.post('/api/addTilgung',this.tilgung ,{
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                }); // Replace with your API endpoint
-                console.log(response.data);
-                window.location.reload();
-            } catch (error) {
-                console.error('Error fetching items:', error);
-        }
-        },
- */
     }
 }
       

@@ -89,14 +89,6 @@
     },
     methods: {
 
-     /*  async updateData() {
-        try {
-          this.darlehen = await fetchDarlehen();              
-          this.tilgung = await fetchTilgungen();          
-        }catch(error) {
-          console.error('Error fetching data:',error)
-        }
-      }, */
 
       formattedMoney(number) {
       // Format the number as a money value

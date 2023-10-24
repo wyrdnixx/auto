@@ -34,7 +34,16 @@ eventBus.$on('evt_eb_udpateTilgungen', async () => {
   eventBus.$emit('evt_ItemListComp_udpateTilgungen', res);
 });
 
-eventBus.$on('EVT_addTilgung', (data) => {
-  addTilgung(data);
+eventBus.$on('evt_eb_addTilgung', async (data) => {
+  console.log("evt_eb_addTilgung triggered for: ", data)
+  try {
+     await addTilgung(data);
+    eventBus.$emit('evt_eb_udpateTilgungen');
+  }catch (error) {
+    
+    console.log("Error on addTilgung: ", error);
+
+  }
+  
    
 })
