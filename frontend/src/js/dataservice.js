@@ -69,3 +69,21 @@ export async function addTilgung(data) {
         console.error('Error fetching items:', error);
     }
 }
+
+export async function deleteTilgung(data) {
+  try {
+      const response = await fetch(apiUrl+'/api/deleteTilgung',{
+        method: "POST",  
+        headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify( 
+            data
+          )
+      }); // Replace with your API endpoint
+      console.log("response to deleteTilgung: ", response.status, " ok: ", response.ok);
+      
+  } catch (error) {
+      console.error('Error deleting items:', error);
+  }    
+}

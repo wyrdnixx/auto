@@ -5,7 +5,7 @@
 import Vue from 'vue';
 const eventBus = new Vue();
 
-import { addTilgung, fetchDarlehen, fetchTilgungen} from "./js/dataservice";  
+import { addTilgung, fetchDarlehen, fetchTilgungen, deleteTilgung} from "./js/dataservice";  
 
 
 
@@ -44,6 +44,15 @@ eventBus.$on('evt_eb_addTilgung', async (data) => {
     console.log("Error on addTilgung: ", error);
 
   }
-  
-   
 })
+
+eventBus.$on('evt_eb_deleteTilgungen', async (data) => {
+  console.log("evt_eb_deleteTilgungen triggered: ", data);
+  data.forEach(async (element, index) => {  
+    console.log(`evt_eb_deleteTilgungen  ${index}: ${element}`);
+    await deleteTilgung(element);
+    
+  });
+  const res = await fetchTilgungen();  
+  eventBus.$emit('evt_ItemListComp_udpateTilgungen', res);
+});

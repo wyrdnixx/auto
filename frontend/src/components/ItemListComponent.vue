@@ -6,7 +6,7 @@
       <h2> offener Restbetrag: {{darlehenDiv ? formattedMoney(darlehenDiv) : 'Loading...' }} </h2>      
       
       <div v-if="!selectedRows.length == 0">
-        <form @submit.prevent="deleteData">        
+        <form @submit.prevent="deleteTilgungen">        
           <button type="submit"> delte selected data</button>       
         </form>
       </div>      
@@ -33,7 +33,12 @@
           <td>{{ t.id }}</td>
           <td>{{ t.datum }}</td>
           <td>{{ formattedMoney(t.betrag) }}</td>
-          <td>{{ t.validated }}</td>
+          <td><!-- 
+            <span v-if="t.validated">{{ t.validated }}</span>
+            <img v-else :src="../assets/logo.png" alt="Image" /> -->
+            <span v-if="t.validated">{{ t.validated }}</span>
+            <img v-else :src="imageUrl" alt="Image" width="30" height="30" />            
+          </td>
         </tr>
       </tbody>
     </table>
@@ -48,6 +53,9 @@
   export default {
     data() {
       return {
+        imageUrl: `${process.env.BASE_URL}openValidation.png`, // Set to your actual image URL
+        //imageUrl: "https://www.hosteurope.de/blog/wp-content/uploads/2015/04/Abbildung-Favicon-einf%C3%BCgen-mit-Homepage-Baukasten-300x186.png", // Set to your actual image URL
+        
         tilgungen: [],
         //idSum: 0, // Initialize the sum to 0
         darlehen: [],
@@ -107,6 +115,17 @@
       isSelected(index) {
         return this.selectedRows.includes(index);
       },    
+
+      deleteTilgungen() {
+        console.log("emiting evt_eb_deleteTilgungen ")
+        eventBus.$emit('evt_eb_deleteTilgungen',this.selectedRows );
+        //console.log("selected: ", this.selectedRows)
+        /* this.selectedRows.forEach((element, index) => {  
+          console.log(`Element at index ${index}: ${element}`);
+          eventBus.$emit('evt_eb_deleteTilgungen', element );
+        }); */
+        
+      }
     },
   };
   </script>
