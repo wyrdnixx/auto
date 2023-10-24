@@ -4,7 +4,11 @@
       <!-- <h2>Darlehen vom {{darlehen[0] ? darlehen[0].datum : 'Loading...' }}  Betrag:  {{darlehen[0] ? darlehen[0].betrag : 'Loading...' }} € </h2>-->
       <h2>Darlehen vom {{darlehen[0] ? darlehen[0].datum : 'Loading...' }}  Betrag:  {{darlehen[0] ? formattedMoney(this.darlehen[0].betrag)  : 'Loading...' }} € </h2>
       <h2> offener Restbetrag: {{darlehenDiv ? formattedMoney(darlehenDiv) : 'Loading...' }} </h2>      
-      
+      <div>
+        <button @click="showToast">Show Toast</button>
+        
+        <ToastMessage v-if="toastData.showToast" :message="toastData.message" @close="handleToastResponse" />
+      </div>
       <div v-if="!selectedRows.length == 0">
         <form @submit.prevent="deleteTilgungen">        
           <button type="submit"> delte selected data</button>       
@@ -49,8 +53,11 @@
 
   //import {  fetchDarlehen, fetchTilgungen } from "../js/dataservice";
   import eventBus from '../eventBusFunctions';
-
+  import ToastMessage from './ToastMessage.vue';
   export default {
+    components: {
+      ToastMessage,
+    },
     data() {
       return {
         imageUrl: `${process.env.BASE_URL}openValidation.png`, // Set to your actual image URL
@@ -61,7 +68,12 @@
         darlehen: [],
         //darlehenDiv:0,
         selectedRows: [],
-        
+        toastData: {
+          showToast: false,
+          message: '',
+          resolve: null,
+          reject: null,
+        },
       };
     },
     computed: {    
@@ -118,14 +130,30 @@
 
       deleteTilgungen() {
         console.log("emiting evt_eb_deleteTilgungen ")
-        eventBus.$emit('evt_eb_deleteTilgungen',this.selectedRows );
-        //console.log("selected: ", this.selectedRows)
-        /* this.selectedRows.forEach((element, index) => {  
-          console.log(`Element at index ${index}: ${element}`);
-          eventBus.$emit('evt_eb_deleteTilgungen', element );
-        }); */
+        eventBus.$emit('evt_eb_deleteTilgungen',this.selectedRows );          
         
-      }
+      },
+      showToast() {
+        console.log("showToast was clicked")
+        return new Promise((resolve, reject) => {
+          this.toastData = {
+            showToast: true,
+            message: 'Do you want to continue?',
+            resolve,
+            reject,
+          };
+        });
+      },
+      
+      handleToastResponse(response) {
+        if (response) {
+          // Handle "Yes" response
+          console.log('Yes was clicked');
+        } else {
+          // Handle "No" response
+          console.log('No was clicked');
+        }
+      },
     },
   };
   </script>
