@@ -17,7 +17,7 @@
       </form>
       -->
 
-      <form @submit.prevent="addData">
+      <form @submit.prevent="addTilgung">
         <div>
           <label for="datum">Datum:</label>
           <input type="date" lang="de" id="datum" v-model="tilgung.datum" required>
@@ -30,14 +30,17 @@
         <button type="submit"> senden</button>       
       </form>
 
+      <form @submit.prevent="testUpdateEvent">
+        <button type="submit"> EVT_testUpdateEvent</button>       
+      </form>
 
     </div>
   </template>
   
   <script>
 
-  import { addTilgung} from "../js/dataservice";
-  import { EventBus } from '../main.js';
+  //import { addTilgung} from "../js/dataservice";  
+  import eventBus from '../eventBusFunctions';
 
   export default {
     data() {
@@ -49,14 +52,18 @@
       };
     },
     methods: {     
-      async addData() {
+      async addTilgung() {
         try {
-          await addTilgung(this.tilgung);   
+          //await addTilgung(this.tilgung);   
           //this.$parent.refreshData();         
-          EventBus.$emit('EVTcustom-event', this.tilgung);
+          //EventBus.$emit('EVTcustom-event', this.tilgung);
+          eventBus.$emit('EVT_addTilgung', this.tilgung);
         }catch(error) {
-          console.error('Error fetching data:',error)
+          console.error('Error fetching data:',error);
         }
+      },
+      async testUpdateEvent() {
+        eventBus.$emit('EVT_testUpdateEvent')
       },
        /*  async insertTilgung() {
             try {

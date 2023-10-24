@@ -14,8 +14,9 @@
 import ItemListComponent from './components/ItemListComponent.vue'
 import insertComponent from './components/insertComponent.vue';
 
-import { EventBus } from './main.js';
+//import { EventBus } from './main.js';
 
+//import eventBus from './eventBusFunctions';
 
 export default {
   name: 'App',
@@ -25,7 +26,9 @@ export default {
     ItemListComponent
   }, 
   created() {
-    EventBus.$on('EVTcustom-event', (data) => {
+        
+
+/*     EventBus.$on('EVTcustom-event', (data) => {
       // Handle the event data
       console.log("Eventbus got test Data: ", data);
       console.log("Eventbus Data: ", data.betrag, " + ", data.datum);
@@ -36,7 +39,9 @@ export default {
 
     EventBus.$on('EVTRefreshData', () => {
       this.$refs.ItemListComponentRef.updateData();
-    });
+    }); */
+
+
   },
   methods: {
     refreshData() {

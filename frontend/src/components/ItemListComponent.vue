@@ -26,7 +26,7 @@
           <td>{{ formattedMoney(idSum) }} </td>
           <td></td>
         </tr>
-        <tr v-for="t in tilgung" :key="t.id"
+        <tr v-for="t in tilgungen" :key="t.id"
           :class="{ selected: isSelected(t.id) }"
           @click="toggleSelection(t.id)"
         >
@@ -42,12 +42,13 @@
   
   <script>
 
-  import {  fetchDarlehen, fetchTilgungen } from "../js/dataservice";
+  //import {  fetchDarlehen, fetchTilgungen } from "../js/dataservice";
+  import eventBus from '../eventBusFunctions';
 
   export default {
     data() {
       return {
-        tilgung: [],
+        tilgungen: [],
         //idSum: 0, // Initialize the sum to 0
         darlehen: [],
         //darlehenDiv:0,
@@ -57,7 +58,7 @@
     },
     computed: {    
       idSum:  function()  {        
-        return Object.values(this.tilgung).reduce((sum, entry) => sum + entry.betrag, 0);
+        return Object.values(this.tilgungen).reduce((sum, entry) => sum + entry.betrag, 0);
       },
       darlehenDiv: function() {
         // check if the darlehen has alraedy been fetched...
@@ -71,21 +72,31 @@
     },
     
     mounted() {      
-      this.updateData();
+      //this.updateData();
+      eventBus.$on('evt_ItemListComp_udpateDarlehen', async (data) => {
+        console.log("ItemListComp got darlehen from eventBus: ", data[0])        
+        this.darlehen =  data;        
+      });
+      eventBus.$on('evt_ItemListComp_udpateTilgungen', async (data) => {
+        console.log("ItemListComp got tilgungen from eventBus: ", data)        
+        this.tilgungen =  data;        
+      });
+      
     },
     created() {
-      
+      eventBus.$emit('evt_eb_udpateDarlehen');
+      eventBus.$emit('evt_eb_udpateTilgungen');
     },
     methods: {
 
-      async updateData() {
+     /*  async updateData() {
         try {
           this.darlehen = await fetchDarlehen();              
           this.tilgung = await fetchTilgungen();          
         }catch(error) {
           console.error('Error fetching data:',error)
         }
-      },
+      }, */
 
       formattedMoney(number) {
       // Format the number as a money value
