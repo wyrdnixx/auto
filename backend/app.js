@@ -1,6 +1,7 @@
 const express = require('express');
 //const sqlite3 = require('sqlite3').verbose();
 const sqlite3 = require('better-sqlite3');
+//const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 
 const app = express();
@@ -11,8 +12,8 @@ const path = require('path');
 const dbPath = path.resolve(__dirname, 'database.db'); // Adjust the filename as needed
 
 
-//const db = new sqlite3.Database(dbPath);
-const db = new sqlite3(dbPath)
+const db = new sqlite3(dbPath);
+
 
 // Enable CORS for all origins
 app.use((req, res, next) => {
@@ -62,6 +63,33 @@ app.post('/api/addTilgung', (req, res) => {
 
   try {
     stmt.run(datum, betrag);
+    res.status(201).json({ message: 'Entry created successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error creating entry' });
+  }
+});
+
+// Define an API endpoint for inserting data
+app.post('/api/deleteTilgung', (req, res) => {
+  //const { id } = req.body;
+  console.log(req.body);
+  
+  /* if (!id) {
+    return res.status(400).json({ error: 'error in ID for "deleteTilgung"' });
+  } */
+  //const query = `SELECT * FROM your_table WHERE id IN (${placeholders})`;
+  const placeholders = req.body.map(() => '?').join(',');
+  const query = `SELECT * from tilgung where id IN (${placeholders});`;
+  //const stmt = db.prepare(query);
+
+
+  try {    
+    // Execute the query
+    const stmt = db.prepare(query);
+    const rows = stmt.all(req.body);
+    // Process the results
+    console.log(rows);    
     res.status(201).json({ message: 'Entry created successfully' });
   } catch (error) {
     console.error(error);

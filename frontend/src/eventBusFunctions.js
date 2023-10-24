@@ -48,11 +48,14 @@ eventBus.$on('evt_eb_addTilgung', async (data) => {
 
 eventBus.$on('evt_eb_deleteTilgungen', async (data) => {
   console.log("evt_eb_deleteTilgungen triggered: ", data);
-  data.forEach(async (element, index) => {  
+  
+  /* data.forEach(async (element, index) => {  
     console.log(`evt_eb_deleteTilgungen  ${index}: ${element}`);
-    await deleteTilgung(element);
-    
+    await deleteTilgung(element);    
   });
+ */
+  await deleteTilgung(data);    
+
   const res = await fetchTilgungen();  
   eventBus.$emit('evt_ItemListComp_udpateTilgungen', res);
 });
