@@ -72,30 +72,32 @@ app.post('/api/addTilgung', (req, res) => {
 
 // Define an API endpoint for inserting data
 app.post('/api/deleteTilgung', (req, res) => {
-  //const { id } = req.body;
-  console.log(req.body);
   
-  /* if (!id) {
-    return res.status(400).json({ error: 'error in ID for "deleteTilgung"' });
-  } */
-  //const query = `SELECT * FROM your_table WHERE id IN (${placeholders})`;
-  const placeholders = req.body.map(() => '?').join(',');
-  const query = `SELECT * from tilgung where id IN (${placeholders});`;
-  //const stmt = db.prepare(query);
+  console.log("deleting: ", req.body);
+  
+  const placeholders = req.body.map((id) => '?').join(', ');
+  const stmt = db.prepare(`DELETE FROM tilgung WHERE id IN (${placeholders})`);
+  
+  try {      
 
-
-  try {    
     // Execute the query
-    const stmt = db.prepare(query);
-    const rows = stmt.all(req.body);
+    const result = stmt.run(req.body);
+    
     // Process the results
-    console.log(rows);    
-    res.status(201).json({ message: 'Entry created successfully' });
+    if (result.changes > 0) {
+      console.log(`Deleted ${result.changes} rows from the tilgung table.`);
+      res.status(201).json({ message: 'Deleted entrys: '+ result.changes });
+    } else {
+      console.log(`No rows were deleted from the tilgung table.`);
+      res.status(500).json({ error: 'No rows were deleted from the tilgung table.`'});
+    }    
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error creating entry' });
+    res.status(500).json({ error: 'Error deleting entry: '+ error });
   }
 });
+
+
 
 // Define an API endpoint for inserting data
 app.post('/api/darlehen', (req, res) => {
