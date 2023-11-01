@@ -6,6 +6,13 @@ import AxiosPlugin from './axios'; // Assuming you have an axios.js file in the 
 export const EventBus = new Vue();
 
 
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
+
 // Use the Axios plugin
 Vue.use(AxiosPlugin);
 Vue.config.productionTip = false

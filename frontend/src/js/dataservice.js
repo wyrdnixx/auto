@@ -1,7 +1,8 @@
 
 
 
-const apiUrl = 'http://codesrv:3000';
+//const apiUrl = 'http://codesrv:3000';
+const apiUrl = 'http://192.168.1.113:3000';
 
 ////////////////////////
 // test

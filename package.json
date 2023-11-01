@@ -8,9 +8,13 @@
     "start:fullstack": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "install:frontend": "cd frontend && npm install",
     "install:backend": "cd backend && npm install",
-    "install:fullstack": "npm install && npm run install:frontend && npm run install:backend"
+    "install:fullstack": "npm install && npm run install:frontend && npm run install:backend",
+    "start:production": "npm run install:fullstack && cd backend && npm run start"
   },
   "devDependencies": {
     "concurrently": "^8.2.1"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.2"
   }
 }

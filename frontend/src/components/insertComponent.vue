@@ -27,7 +27,8 @@
          <input type="number" step="0.01" id="betrag" v-model="tilgung.betrag" required>
          
         </div>
-        <button type="submit"> senden</button>       
+        <b-button type="submit"  variant="success">senden</b-button>   
+       <!--  <button type="submit"> senden</button>        -->
       </form>
 
 
