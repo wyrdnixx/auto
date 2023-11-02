@@ -1,9 +1,13 @@
-version: '3.8'
+version: "3"
 services:
-  app:
-    build: 
-      context: .
-      dockerfile: Dockerfile
-#    volumes:
-#      - ../..:/workspaces:cached          
-#    command: sleep infinity
+  client:
+    image: node:latest
+    command: sh -c 'npm run install:fullstack && node backend/app.js'
+    #command: sh -c 'echo "foo" && yarn install && yarn run start.dev'
+    #environment:
+    #  - PORT=8080
+    working_dir: /opt/app
+    volumes:
+      - .:/opt/app
+    ports:
+      - "3000:3000"
