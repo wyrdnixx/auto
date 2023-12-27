@@ -50,6 +50,8 @@ db.exec('CREATE TABLE IF NOT EXISTS tilgung (id INTEGER PRIMARY KEY, datum DATE,
 app.use(express.json());
 app.use(express.static('../frontend/dist'))
 
+
+
 // Define routes for getting and setting items
 app.get('/api/darlehen', (req, res) => {
   const query = 'SELECT * FROM darlehen where id = 1';
