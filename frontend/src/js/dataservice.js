@@ -3,7 +3,9 @@
 
 //const apiUrl = 'http://codesrv:3000';
 //const apiUrl = 'http://192.168.1.113:3000';
-const apiUrl = 'http://' + window.location.hostname;
+
+const port = window.location.port ? ':' + window.location.port : '';
+const apiUrl = window.location.protocol + '//' + window.location.hostname + port;
 
 ////////////////////////
 // test
