@@ -2,7 +2,9 @@ version: "3"
 services:
   client:
     image: node:latest
-    command: sh -c 'npm run install:fullstack && node backend/app.js'
+    #command: sh -c 'npm run install:fullstack && node backend/app.js'
+    command: sh -c 'npm run start:production'
+    
     #command: sh -c 'echo "foo" && yarn install && yarn run start.dev'
     #environment:
     #  - PORT=8080
