@@ -7,7 +7,7 @@
     "start:frontend": "cd frontend && npm run serve",
     "start:fullstack": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "install:frontend": "cd frontend && npm install && npm run build",
-    "install:backend": "cd backend && npm install",
+    "install:backend": "cd backend &&  npm install nodemon && npm install",
     "install:fullstack": "npm install && npm run install:frontend && npm run install:backend",
     "start:production": "npm run install:fullstack && cd backend && npm run start"
   },
